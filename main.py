@@ -45,12 +45,14 @@ class MyObject:
 
         # Calculate slope between the chosen corner of self and the center of other if y-values differ
         slope = (corner_self[1] - center_other[1]) / (corner_self[0] - center_other[0])
-
+        
         # Calculate slope of other's rect diagonal
         diagonal_slope = other.rect.height / other.rect.width
-
-        # Compare slopes to determine type of collision
-        if abs(slope) == diagonal_slope:  # Diagonal collision (slope matches)
+        # Use epsilon to check for floating-point precision issues
+        epsilon = 1e-5  # Small tolerance value
+            
+        # Collision detection based on slope comparison with tolerance
+        if abs(slope - diagonal_slope) < epsilon:  # Diagonal collision
             if dx >= 0 and dy >= 0:  # Bottom-right diagonal
                 self.rightcol = True
                 self.bottomcol = True
